@@ -1,0 +1,38 @@
+# Place the cursor inside "graph" to get some refactoring options
+
+digraph {
+    rankdir=LR;
+    splines=ortho
+
+    subgraph cluster_A{
+        label="A"
+        B_client[label="B_client.call_async()"]
+    }
+
+    subgraph cluster_B{
+        label="B"
+        {
+        rank=same 
+        C_client[label="C_client.call_async()"]
+        B_service[label="B Service\ncallback"]
+        spin_until [label="rclpy.spin_until_future(B)"]
+        }
+
+    }
+
+    subgraph cluster_C{
+        label="C"
+        C_service[label="C Service\ncallback"]
+    }
+
+
+    B_client -> B_service [label="1"]
+    B_service -> B_client [label="2"]
+
+    B_service -> C_client [label="3s"]
+    C_client -> spin_until
+    spin_until -> B_service
+        
+    C_client -> C_service [label="4"]
+    C_service -> C_client [label="future.done() = true"]
+}

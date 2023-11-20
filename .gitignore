@@ -24,10 +24,6 @@ typings/
 # CMake
 build/
 
-# Generated images
-*.jpeg
-*.png
-*.jpg
 
 # Except those in the docs
 !docs/source/images/*.png

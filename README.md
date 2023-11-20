@@ -47,21 +47,9 @@ Done
 
 The example consists of three nodes, A, B, and C. Node A calls a service in node B. Node B calls a service in node C. Node C sets a variable and returns.
 
-```mermaid
-flowchart LR
-    subgraph A
-        B_client
-    end
+![graph](graph.png)
 
-    subgraph B
-        direction TB
-        B_service -- invoke --> C_client
-    end
+When using the default [SingleThreadeExecutor](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Executors.html#types-of-executors), the method `rclpy.wait_until_future_complete(self)` will block the executor from checking the reply.
 
-    subgraph C
-        C_service
-    end
-
-    B_client -- call --> B_service
-    C_client -- call --> C_service
-```
+This is due to the order in which the ROS2 executor checks for events (seen in the next figure).
+![ROS2 Executor](https://docs.ros.org/en/humble/_images/executors_scheduling_semantics.png)
