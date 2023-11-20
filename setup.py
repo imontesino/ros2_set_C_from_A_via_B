@@ -20,6 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "node_A = ros2_set_C_from_A_via_B.node_A:main",
+            "node_B = ros2_set_C_from_A_via_B.node_B:main",
+            "node_C = ros2_set_C_from_A_via_B.node_C:main",
         ],
     },
 )
